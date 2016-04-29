@@ -43,9 +43,9 @@ public class MapView extends Container implements Observer {
 		goc = gw.getGameObjectCollection();
 		c = gw.getStart();
 		repaint();
-		if (o instanceof GameWorld) {
-			gw.printMap();
-		}
+//		if (o instanceof GameWorld) {
+//			gw.printMap();
+//		}
 		if(gw.getDogsRemaining() <= 0){
 			timer.cancel();
 			Dialog.show("Game Complete!", "","", "Cancel");

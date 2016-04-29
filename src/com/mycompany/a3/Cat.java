@@ -85,15 +85,12 @@ public class Cat extends Animal implements ICollider, IGuide, IDrawable {
 //				gw
 //			}
 //		}
-		gw.precatCollide();
-//		Cat cat1 = new Cat();
-//		Cat cat2 = new Cat();
-//		if(cat1.collidesWith(cat2) && cat2.collidesWith(cat1)){
-//			int randomR = this.rand.nextInt(256);
-//			int randomG = this.rand.nextInt(256);
-//			int randomB = this.rand.nextInt(256);
-//			this.setColor(ColorUtil.rgb(randomR, randomG, randomB));
-//		}
+		Cat cat1 = new Cat();
+		Cat cat2 = new Cat();
+		if(cat1.collidesWith(cat2) && cat2.collidesWith(cat1)){
+			gw.precatCollide();
+			this.setColor(ColorUtil.YELLOW);
+		}
 		
 	}
 

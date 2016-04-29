@@ -328,11 +328,11 @@ public class GameWorld extends Observable {
 		// direction and speed
 		ticking = ticking + 1;
 		//IIterator iter3 = objects.getIterator();
-		GameObject currentObject;
+		Object currentObject;
 		IIterator iter = objects.getIterator();
 
 		while (iter.hasNext()) {
-			currentObject = (GameObject) iter.getNext();
+			currentObject = iter.getNext();
 			if (currentObject instanceof Animal) {
 				((Animal) currentObject).move();
 			}
