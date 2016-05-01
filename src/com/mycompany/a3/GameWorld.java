@@ -3,6 +3,7 @@ package com.mycompany.a3;
 import java.util.*;
 import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.*;
+import com.codename1.ui.geom.Point2D;
 
 public class GameWorld extends Observable {
 	private Net net;
@@ -22,28 +23,9 @@ public class GameWorld extends Observable {
 	private ColorUtil color;
 	Random rand = new Random();
 	
-	public int getInitDog(int dogInit){
-		return dogInit;
-	}
-	public void setInitDog(int dogInit){
-		this.dogInit = dogInit;
-		this.setChanged();
-		this.notifyObservers();
-	}
-	public int getInitCat(int catInit){
-		return catInit;
-	}
-	public void setInitCat(int catInit) {
-		this.catInit = catInit;
-		this.setChanged();
-		this.notifyObservers();
-	}
 
-	GameWorld() {
+	public GameWorld() {
 		objects = new GameObjectCollection();
-		dog = new Dog();
-		cat = new Cat();
-		net = new Net();
 	}
 
 	public void initLayout() {
@@ -61,8 +43,8 @@ public class GameWorld extends Observable {
 			dog = new Dog();
 			dog.setSpeed(5);
 			dog.setColor(ColorUtil.rgb(0, 0, 0));
-			dog.setLocation(rand.nextInt(1024), rand.nextInt(1024));
-			dog.setSize(rand.nextInt(50));
+			dog.setLocation(rand.nextInt(750), rand.nextInt(600));
+			dog.setSize(rand.nextInt(50)+20);
 			dog.setDirection(rand.nextInt(360));
 			objects.add(dog);
 
@@ -80,8 +62,8 @@ public class GameWorld extends Observable {
 			cat.setSpeed(5);
 			// cat.setColor(color);
 			cat.setColor(ColorUtil.rgb(250, 250, 210));
-			cat.setLocation(rand.nextInt(1024), rand.nextInt(1024));
-			cat.setSize(rand.nextInt(40));
+			cat.setLocation(rand.nextInt(750), rand.nextInt(600));
+			cat.setSize(rand.nextInt(40) + 20);
 			cat.setDirection(rand.nextInt(360));
 			objects.add(cat);
 
@@ -93,9 +75,10 @@ public class GameWorld extends Observable {
 		}
 	}
 	public void randNet() {
+		net = new Net();
 		net.setColor(color);
-		net.setSize(60);
-		net.setLocation(rand.nextInt(1024), rand.nextInt(1024));
+		net.setSize(100);
+		net.setLocation(rand.nextInt(750), rand.nextInt(600));
 		objects.add(net);
 		// direction = rand.nextInt(maxA - minA + 1) + minA;
 		// net[i] = new Net(size, speed, direction, location);
@@ -125,7 +108,7 @@ public class GameWorld extends Observable {
 	public void scoop() {
 		// scoop up all animals in net. causes all animals whose centers are
 		// within the boundaries of the bounding square of the net to be removed
-		// form the game world and score to be updated according to the rules of
+		// from the game world and score to be updated according to the rules of
 		// the play described above
 		float netLeft = net.getLocationX() - (net.getSize() / 2);
 		float netRight = net.getLocationX() + (net.getSize() / 2);
@@ -262,7 +245,7 @@ public class GameWorld extends Observable {
 			cat = new Cat();
 			cat.setSpeed(5);
 			cat.setColor(ColorUtil.YELLOW);
-			cat.setLocation(rand.nextInt(1024), rand.nextInt(1024));
+			cat.setLocation(rand.nextInt(750), rand.nextInt(600));
 			cat.setSize(rand.nextInt(30) + 20);
 			cat.setDirection(rand.nextInt(360));
 			float spawn = rand.nextInt(4) + 1;
@@ -359,52 +342,52 @@ public class GameWorld extends Observable {
 		this.setChanged();
 		this.notifyObservers();
 		//this.collision();
-//		if(currentTime+20 < tickClock){
-//			for(int i = 0; i<collisionA.size(); i++){
-//				collisionA.remove(i);
-//			}
-//		}
-	}
-	public void collision() {
-		GameObject a;
-		GameObject b;
-		IIterator iter = objects.getIterator();
-		while(iter.hasNext()){
-			a = (GameObject) iter.getNext();
-			if(a instanceof Dog) {
-				Dog dog = (Dog) a;
-				IIterator iter2 = objects.getIterator();
-				while(iter2.hasNext()){
-					b = (GameObject) iter2.getNext();
-					if(b instanceof Cat) {
-						Cat cat = (Cat) b;
-						if(dog.collidesWith(cat) && collisionCheck(dog) == false){
-							currentTime = tickClock;
-							dog.handleCollision(this.dog);
-							addCollision(dog);
-						}
-					}
-				}
-			}
-			if(a instanceof Cat) {
-				Cat cat = (Cat) a;
-				IIterator iter2 = objects.getIterator();
-				while(iter2.hasNext()){
-					b = (GameObject) iter2.getNext();
-					if(b instanceof Cat) {
-						Cat cat2 = (Cat) b;
-						if(cat.collidesWith(cat2) && collisionCheck(cat) == false){
-							currentTime = tickClock;
-							cat.handleCollision(this.cat);
-							addCollision(cat);
-							addCollision(cat2);
-							
-						}
-					}
-				}
+		if(currentTime+20 < tickClock){
+			for(int i = 0; i<collisionA.size(); i++){
+				collisionA.remove(i);
 			}
 		}
 	}
+//	public void collision() {
+//		GameObject a;
+//		GameObject b;
+//		IIterator iter = objects.getIterator();
+//		while(iter.hasNext()){
+//			a = (GameObject) iter.getNext();
+//			if(a instanceof Dog) {
+//				Dog dog = (Dog) a;
+//				IIterator iter2 = objects.getIterator();
+//				while(iter2.hasNext()){
+//					b = (GameObject) iter2.getNext();
+//					if(b instanceof Cat) {
+//						Cat cat = (Cat) b;
+//						if(dog.collidesWith(cat) && collisionCheck(dog) == false){
+//							currentTime = tickClock;
+//							dog.handleCollision(this.dog);
+//							addCollision(dog);
+//						}
+//					}
+//				}
+//			}
+//			if(a instanceof Cat) {
+//				Cat cat = (Cat) a;
+//				IIterator iter2 = objects.getIterator();
+//				while(iter2.hasNext()){
+//					b = (GameObject) iter2.getNext();
+//					if(b instanceof Cat) {
+//						Cat cat2 = (Cat) b;
+//						if(cat.collidesWith(cat2) && collisionCheck(cat) == false){
+//							currentTime = tickClock;
+//							cat.handleCollision(this.cat);
+//							addCollision(cat);
+//							addCollision(cat2);
+//							
+//						}
+//					}
+//				}
+//			}
+//		}
+//	}
 
 	public void printPoints() {
 		// print the points of game state values 1 current score 2 number of
@@ -439,7 +422,6 @@ public class GameWorld extends Observable {
 	}
 
 	public int getTotalScore() {
-		System.out.println(totalScore);
 		return totalScore;
 	}
 

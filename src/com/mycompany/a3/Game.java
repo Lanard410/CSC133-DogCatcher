@@ -3,6 +3,7 @@ package com.mycompany.a3;
 import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.*;
 import com.codename1.ui.events.*;
+import com.codename1.ui.geom.Dimension;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.GridLayout;
@@ -51,7 +52,8 @@ public class Game extends Form implements Runnable{
 		gui();
 
 		timer = new UITimer(this);
-		timer.schedule(15, true, this);
+		timer.schedule(20, true, this);
+		
 
 		gw.addObserver(mv);
 		gw.addObserver(sv);
@@ -65,10 +67,11 @@ public class Game extends Form implements Runnable{
 		if(!isGamePaused) {
 			gw.clockTick();
 		}
+		repaint();
 	}
 	private void gui() {
-		sv = new ScoreView(gw);
-		mv = new MapView(gw);
+//		sv = new ScoreView(gw);
+//		mv = new MapView(gw);
 		setLayout(new BorderLayout());
 		Container totalContainer = new Container(new GridLayout(1000, 800));
 		totalContainer.getAllStyles().setBorder(Border.createLineBorder(2, ColorUtil.YELLOW));

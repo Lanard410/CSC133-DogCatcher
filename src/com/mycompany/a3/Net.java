@@ -15,6 +15,11 @@ public class Net extends Catcher implements IDrawable, ICollider{
 	Image image = null;
 	Random rand;
 	private int size = 35;
+	
+	public Net() {
+		rand = new Random();
+		
+	}
 
 	public int getColorR() {return colorR;}
 	public void setColorR(int colorR) {this.colorR = colorR;}
@@ -29,10 +34,6 @@ public class Net extends Catcher implements IDrawable, ICollider{
 				+ getColorG() + "," + getColorB() + "], size = " + getSize() + "\n");
 	}
 
-	public void setColor(int i) {
-		ColorUtil.rgb(0, 0, 0);
-
-	}
 //	public void move(Dimension dCmp){
 //		//update the object position
 //		currentX += incX;
@@ -50,6 +51,8 @@ public class Net extends Catcher implements IDrawable, ICollider{
 		int halfSize = getSize()/2;
 		g.setColor(ColorUtil.BLACK);
 		g.drawRect((int)getLocationX()-halfSize, (int)getLocationY()-halfSize, getSize(), getSize());
+//		g.drawRect(iX-getParent().getAbsoluteX(), iY-getParent().getAbsoluteY(), 20, 40);
+//		g.fillRect(getX(), getY(), getWidth(), getHeight());
 		//g.drawRect((int)getLocationX(),(int)getLocationY(),5,5);
 		//g.drawImage(image, pCmp.getX() + currentX, pCmp.getY()+ currentY, size, size);
 	}
@@ -73,11 +76,6 @@ public class Net extends Catcher implements IDrawable, ICollider{
 
 	public void handleCollision(ICollider otherObject) {
 		//change color by generating three random colors
-//		int randomR = this.rand.nextInt(256);
-//		int randomG = this.rand.nextInt(256);
-//		int randomB = this.rand.nextInt(256);
-//		this.setColor(ColorUtil.rgb(randomR, randomG, randomB));
-		System.out.print("Net collision");
 		
 	}
 

@@ -12,6 +12,7 @@ import com.codename1.ui.Dialog;
 import com.codename1.ui.Graphics;
 import com.codename1.ui.geom.Point;
 import com.codename1.ui.layouts.BorderLayout;
+import com.codename1.ui.layouts.FlowLayout;
 
 public class MapView extends Container implements Observer {
 	// private int width;
@@ -26,11 +27,14 @@ public class MapView extends Container implements Observer {
 	Vector<Dog> theWorld = new Vector<Dog>();
 
 	MapView(GameWorld mygame) {
-		setLayout(new BorderLayout());
-		setWidth(1000);
-		setHeight(610);
-		getAllStyles().setBgTransparency(255);
-		getAllStyles().setBorder(Border.createLineBorder(2,ColorUtil.BLUE));
+		this.setLayout(new FlowLayout(1024,800));
+//		setWidth(1000);
+//		setHeight(610);
+		//getUnselectedStyle().setBgColor(ColorUtil.CYAN);
+		//getUnselectedStyle().setFgColor(ColorUtil.CYAN);
+		this.getAllStyles().setBgTransparency(255);
+		this.getAllStyles().setBgColor(ColorUtil.GRAY);
+		this.getAllStyles().setBorder(Border.createLineBorder(2,ColorUtil.BLUE));
 
 		this.gw = mygame;
 
@@ -49,6 +53,7 @@ public class MapView extends Container implements Observer {
 		if(gw.getDogsRemaining() <= 0){
 			timer.cancel();
 			Dialog.show("Game Complete!", "","", "Cancel");
+			gw.printMap();
 				
 			
 		}
@@ -73,7 +78,7 @@ public class MapView extends Container implements Observer {
 	@Override
 	public void paint(Graphics g){
 		super.paint(g);
-		Point pCmp = new Point(getWidth(), getHeight());
+		Point pCmp = new Point(getX(), getY());
 		Object next;
 		IIterator iter = gw.objects.getIterator();
 		while(iter.hasNext()){
@@ -92,12 +97,8 @@ public class MapView extends Container implements Observer {
 			}
 		}
 		//g.setColor(0xffffff);
-		g.setColor(0xffffff);
-		g.drawRect(iX-getParent().getAbsoluteX(), iY-getParent().getAbsoluteY(), 20, 40);
-		g.fillRect(getX(), getY(), getWidth(), getHeight());
-		g.setColor(000000);
-		g.drawString("", getX(), getY());
-		g.resetAffine();
+//		g.drawRect(iX-getParent().getAbsoluteX(), iY-getParent().getAbsoluteY(), 20, 40);
+//		g.fillRect(getX(), getY(), getWidth(), getHeight());
 	}
 
 

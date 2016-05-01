@@ -8,7 +8,7 @@ import com.codename1.ui.geom.Dimension;
 import com.codename1.ui.geom.Point;
 //import com.codename1.charts.models.Point;
 
-public class Dog extends Animal implements ICollider, IDrawable, IGuide, ISelectable{
+public class Dog extends Animal implements ICollider, IDrawable, ISelectable{
 	private int scratch;
 	private int speed;
 	private Random rand;
@@ -17,10 +17,23 @@ public class Dog extends Animal implements ICollider, IDrawable, IGuide, ISelect
 	private int colorG = 0;
 	private int colorB = 0;
 	private boolean selected;
+	private int count;
 	private int currentX = 0; private int incX = 3;
 	private int currentY = 0; private int incY = 3;
 	Image image = null;
 	private int size = 35;
+	
+	public Dog() {
+		rand = new Random();
+		setSpeed(5);
+		setColor(ColorUtil.rgb(0, 0, 0));
+		setLocation(rand.nextInt(750), rand.nextInt(600));
+		setSize(50);
+		setDirection(rand.nextInt(360));
+		scratch = 0;
+		count = 0;
+		
+	}
 
 	// Dog information that pertains to the dog in class
 	public int getColorR() {return colorR;}
@@ -63,20 +76,22 @@ public class Dog extends Animal implements ICollider, IDrawable, IGuide, ISelect
 				+ ", scratches = " + getScratch() + "\n");
 	}
 	//move object within boundaries
-	public void move(Dimension dCmp){
-		//update the object position
-		currentX += incX;
-		currentY += incY;
-		
-		//reverse the next movement direction
-		if((currentX + size >= dCmp.getWidth()) || (currentX < 0)){
-			incX = -incX;
-		}
-		if((currentY + size >= dCmp.getHeight()) || (currentY < 0)){
-			incY = -incY;
-		}
-		
-	}
+//	public void move(Dimension dCmp){
+//		//update the object position
+//		currentX = (int) this.getLocationX();
+//		currentY = (int) this.getLocationY();
+//		currentX += incX;
+//		currentY += incY;
+//		
+//		//reverse the next movement direction
+//		if((currentX + getSize() >= dCmp.getWidth()) || (currentX < 0)){
+//			incX = -incX;
+//		}
+//		if((currentY + getSize() >= dCmp.getHeight()) || (currentY < 0)){
+//			incY = -incY;
+//		}
+//		
+//	}
 	public void draw(Graphics g, Point pCmp) {
 		//g.drawArc(getX(), getY(), width, height, 0, 360);
 		//int halfSize = getSize()/2;
@@ -85,7 +100,7 @@ public class Dog extends Animal implements ICollider, IDrawable, IGuide, ISelect
 		int xLoc = (int) (pCmp.getX()+getLocationX());
 		int yLoc = (int) (pCmp.getY()+getLocationY());
 		g.setColor(ColorUtil.BLACK);
-		if(dog.isSelected()) {
+		if(!dog.isSelected()) {
 			g.fillArc(xLoc, yLoc, getSize(), getSize(), 0, 360);
 		}else {
 			g.drawArc(xLoc, yLoc, getSize(), getSize(), 0, 360);
@@ -128,23 +143,20 @@ public class Dog extends Animal implements ICollider, IDrawable, IGuide, ISelect
 
 	public void handleCollision(ICollider otherObject) {
 		//change color by generating three random colors
-		gw.prefight();
-//		Dog dog1 = new Dog();
-//		Dog dog2 = new Dog();
-//		Cat cat1 = new Cat();
-//		if(dog1.collidesWith(dog2) && dog2.collidesWith(dog1)){
-//			//gw.prefight();
-//			int randomR = this.rand.nextInt(256);
-//			int randomG = this.rand.nextInt(256);
-//			int randomB = this.rand.nextInt(256);
-//			this.setColor(ColorUtil.rgb(randomR, randomG, randomB));
-//		}
-
-		int speed = getSpeed();
-		speed--;
-		if(speed==0){
-			setSpeed(speed);
-			setColor(ColorUtil.rgb(255, 0, 0));
+		//gw.prefight();
+		if(otherObject instanceof Cat){
+			count = 1000;
+			this.scratched();
+			int speed = getSpeed();
+			if(speed==0){
+				setSpeed(speed);
+				setColor(ColorUtil.rgb(255, 0, 0));
+			}
+			int randomR = this.rand.nextInt(256);
+			int randomG = this.rand.nextInt(256);
+			int randomB = this.rand.nextInt(256);
+			this.setColor(ColorUtil.rgb(randomR, randomG, randomB));
+			
 		}
 		
 	}

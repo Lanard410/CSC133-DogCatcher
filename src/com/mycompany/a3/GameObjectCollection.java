@@ -6,14 +6,16 @@ public class GameObjectCollection implements ICollection {
 	private Vector<Object> collection;
 
 	GameObjectCollection() {
-		collection = new Vector();
+		collection = new Vector<Object>();
 	}
 
 	public void add(Object o) {
 		collection.addElement(o);
+		//collection.addElement(o);
 	}
 
 	public boolean remove(Object o) {
+		collection.remove(o);
 		return false;
 	}
 
